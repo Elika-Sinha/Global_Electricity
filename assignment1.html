@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>Assignment 1</title>
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script> 
+        
+        <script src="https://player.vimeo.com/api/player.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        
+        <script src="echarts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.3.1-rc.1/echarts.min.js"></script>
+        <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script> 
+
+        <style>
+            body { 
+                margin:0px; 
+                padding:0;
+                font-family: Gill Sans, 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif !important; 
+                color: rgb(56, 54, 54);
+                }
+             
+            .header {
+                margin: 0px;
+                padding: 50px;
+                padding-bottom: 0px;
+                font-size: 50px;
+                text-align: right;
+                background: #000201; 
+                background-size: cover;
+                color: white; 
+                }
+            .text {
+                margin: 100px;
+                margin-bottom: 50px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                padding-left: 300px;
+                padding-right: 300px;
+                font-size: 20px;
+                text-align: center;
+                text-align: justify;
+                color: rgb(49, 48, 48);
+            }  
+            .text2 {
+                margin: 100px;
+                margin-bottom: 0px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                padding-left: 300px;
+                padding-right: 300px;
+                font-size: 20px;
+                text-align: center;
+                text-align: justify;
+                color: rgb(43, 43, 43);
+            }  
+            .chart1{
+                margin: 100px;
+                margin-top: 25px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                padding-left: 200px;
+                padding-right: 0px;
+                align-items: center;
+                width: 800px;
+                height: 600px;
+                font-family: Gill Sans, 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+            }
+            .chart2{
+                margin: 100px; 
+                margin-top: 25px;
+                width: 800px;
+                height: 600px;
+                font-family: Gill Sans, 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+                text-align: center;
+                margin-bottom: 50px;
+                color: black;
+            }
+            .chart3{
+                margin: 100px;
+                margin-bottom: 0px;
+                margin-top: 0px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                padding-left: 250px;
+                padding-right: 0px;
+                align-items: center;
+                width: 800px;
+                height: 600px;
+                font-family: Gill Sans, 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+            }
+            .slideshow-container {
+                max-width: 1000px;
+                max-height: 1000px;
+                position: relative;
+                margin: auto;
+            }
+            .prev, .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                width: auto;
+                padding: 15px;
+                margin-top: -22px;
+                color: rgb(12, 0, 0);
+                font-weight: bold;
+                font-size: 18px;
+                transition: 0.5s ease;
+                border-radius: 0 3px 3px 0;
+                user-select: none;
+            }
+            .next {
+                right: 0;
+                border-radius: 3px 0 0 3px;
+            }
+            .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            } 
+            .numbertext {
+                color: #030000;
+                font-size: 12px;
+                padding: 8px 12px;
+                position: absolute;
+                bottom: 0;
+                right:0;
+            }
+            .dot {
+                cursor: pointer;
+                height: 15px;
+                width: 15px;
+                margin: 0 2px;
+                background-color: rgb(3, 0, 0);
+                border-radius: 50%;
+                display: inline-block;
+                transition: background-color 0.6s ease;
+            }
+            .active, .dot:hover {
+                 background-color: #717171;
+            }
+            .btn { 
+                margin: 0px;
+                margin-left: 600px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                left: 50%;
+                background-color: rgb(255, 255, 255);
+                border-color: grey;
+                border-radius: 25px;
+                padding: 14px 28px;
+                font-size: 16px;
+                cursor: pointer;
+                display: inline-block;
+            } 
+            .modal {
+            display: none; 
+            position: relative;
+            padding-top: 0px; 
+            padding-bottom: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            width: 100%;
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(255, 253, 253); 
+            background-color: rgb(255, 255, 255); 
+            } 
+            .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px; 
+            width: 80%;
+            } 
+            .close {
+            color: #050000;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            }
+            .close:hover,
+            .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            } 
+        </style>
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Global Electricity</h1>
+            <p style="font-size: 24px;">When some people have access to too much energy, others have access to too little</p>
+            <image src="Light1.gif" style="width: 640px; height:480px"></image>
+        </div>
+
+        
+        <div class="text">
+            <h2>ELECTRICITY AND ACCESS</h2>
+            <h3>AFFORDABLE AND CLEAN ENERGY</h3>
+            <h4>Sustainable Development Goal 7</h4>
+            <p style="font-size: 20px;">The United Nations General Assembly in 2015 set up 17 sustainable development goals to
+                design a "blueprint to achieve a better and more sustainable future for all". According to a World Bank report the proportion of people worldwide with access to electricity and clean fuels has increased substantially over the past decade. In 2018, 
+                90 percent of the world's population had access to electricity, up from 82 percent in 2008, and 63 percent had access to clean fuels and technology 
+                for cooking, up from 55 percent. Recognizing the need for access to electrivity for all; this assignment investigates the access to energy globally and zooms into region, country and city level. 
+            </p>
+        </div> 
+
+       
+
+        <button id="myBtn" class="btn">Energy and Disparity</button>
+ 
+        <div id="myModal" class="modal">
+         
+          <div class="modal-content">
+            <span class="close">&times;</span>
+             
+            <iframe src="https://player.vimeo.com/video/706542749?h=06a9194a86&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1150" height="800" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video.mp4"></iframe>
+            
+            <p>Some people have too little energy; others burn too much. This video clip also explores why our use of energy affects the atmosphere.</p>
+            <p>Humans & Energy; credits: the National Geographic Society</p>
+            <p><a href = "https://www.nationalgeographic.org/media/humans-energy/">https://www.nationalgeographic.org/media/humans-energy/</a></p>
+          </div>
+
+        </div>
+        
+        <script>
+         
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+        span.onclick = function() {
+          modal.style.display = "none";
+        } 
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+
+        </script> 
+
+        <div class="text2">
+            <h2>World Access to Electricity</h2>
+            <p>The chart below accounts for the total number of population with as well as without access to electricity. 
+                As of the year 2019, 6.91 billion people have access to electricity which has risen from 4.33 billion in 1990. 
+                However, there are still 760.89 million	people without access to electricity in 2019- and this number has decreased from
+                1.63 billion in 1990.   
+            </p>
+        </div>
+
+        <div id="main" class="chart1"></div>
+        
+        <script type="text/javascript">
+
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            option = {
+            title: {
+                text: ' '
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+                }
+            },
+            legend: {
+                data: ['People with access to electricity', 'People without access to electricity']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1999', '2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                }
+            ],
+            yAxis: [
+                {
+                type: 'value'
+                }
+            ],
+            series: [
+                {
+                name: 'People without access to electricity',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                color: '#8533ff',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [1560732873,
+                                    1300147672,
+                                    1348878978,
+                                    1292337225,
+                                    1269819711,
+                                    1275986787,
+                                    1291836592,
+                                    1236065595,
+                                    1187694198,
+                                    1197052189,
+                                    1178796833,
+                                    1155955407,
+                                    1252623019,
+                                    1081408204,
+                                    1074098683,
+                                    1049133644,
+                                    986111206.9,
+                                    912138375.4,
+                                    855920037.1,
+                                    803358762.5,
+                                    760886587,
+                                ]
+                },
+                {
+                name: 'People with access to electricity',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                color: '#ff3333',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [4326061660,
+                                    4473758747,
+                                    4814184845,
+                                    4844792716,
+                                    4980415784,
+                                    5082062674,
+                                    5155564934,
+                                    5219911681,
+                                    5356668964,
+                                    5486509499,
+                                    5559968636,
+                                    5660777400,
+                                    5765921664,
+                                    5750257896,
+                                    6004382234,
+                                    6095576514,
+                                    6205159204,
+                                    6352965447,
+                                    6512346366,
+                                    6653490191,
+                                    6789116852,
+                                    6912458804,]
+                },
+            ]
+            };
+
+            option && myChart.setOption(option);
+  
+        </script>
+
+        <div class="text2">
+            <h2>Access to Electricity by Region</h2>
+            <p>The statistics indicate the evident disparity between regions and subregions around the world, particularly empahsizing on the 
+                regions where inaccess surpasses access. In Africa Eastern and Southern, people without access to electricity 
+                accounted for 318.5 million in 1990, the absolute change to this number was only around 4 million in 2000 (with 314.14 million people without access in 2000).
+                This number has starkly risen to 372 million people who DO NOT have access to electricity in the year 2019; in contrast to North America where over the last 30 years there has been 
+                no part of the populace without access to electricity.
+            </p>
+        </div>
+ 
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 9</div>
+                
+                    <div id="chartsub1" class="chart2"></div>
+                        <script type="text/javascript">
+    
+    var chartDom1 = document.getElementById('chartsub1');
+            var myChart1 = echarts.init(chartDom1);
+            var option1;
+
+            option1 = {
+            title: {
+                text: 'North America',
+                left: "center",
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1991','1992','1993','1994','1995','1996','1997','1998','1999', '2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                }
+            ],
+            yAxis: [
+                {
+                type: 'value'
+                }
+            ],
+            series: [
+                {
+                name: 'People with access to electricity',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                color: '#ff3333',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [277373464,
+                                        281077441,
+                                        284943859,
+                                        288662674,
+                                        292185983,
+                                        295640057,
+                                        299064347,
+                                        302623445,
+                                        306070116,
+                                        309502571,
+                                        312909974,
+                                        316052361,
+                                        319048184,
+                                        321815286,
+                                        324809693,
+                                        327824506,
+                                        331015609,
+                                        334185120,
+                                        337406357,
+                                        340466060,
+                                        343397156,
+                                        345987373,
+                                        348656682,
+                                        351207902,
+                                        353888902,
+                                        356507139,
+                                        359245796,
+                                        361731296,
+                                        363967296,
+                                        365987250]
+                },
+                {
+                name: 'People without access to electricity',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                color: '#8533ff',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0]
+                },
+            ]
+            };
+
+            option1 && myChart1.setOption(option1);
+                        </script>
+                    
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 9</div>
+            
+                    <div id="chartsub2" class="chart2"></div>
+    
+                        <script type="text/javascript">
+    
+                            var chartDom2 = document.getElementById('chartsub2');
+                            var myChart2 = echarts.init(chartDom2);
+                            var option2;
+    
+                            option2 = {
+                            title: {
+                                text: 'Central Europe & Baltics',
+                                left: "center",
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                                } 
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [
+                                {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['1990','1991','1992','1993','1994','1995','1996','1997','1998','1999','2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                type: 'value'
+                                }
+                            ],
+                            series: [
+                                {
+                                name: 'People with access to electricity',
+                                type: 'line',
+                                stack: 'Total',
+                                areaStyle: {},
+                                color: '#ff3333',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [110743128,
+                                                        110469467,
+                                                        110111454,
+                                                        110041924,
+                                                        110021594,
+                                                        109864246,
+                                                        109626194,
+                                                        109422013,
+                                                        109238340,
+                                                        109060951,
+                                                        108447824,
+                                                        107660041,
+                                                        106959751,
+                                                        106624167,
+                                                        106331716,
+                                                        106041911,
+                                                        105772481,
+                                                        105378748,
+                                                        105001883,
+                                                        104800475,
+                                                        104421447,
+                                                        104174038,
+                                                        103935318,
+                                                        103713726,
+                                                        103496179,
+                                                        103257886,
+                                                        102816958,
+                                                        102740078,
+                                                        102538451,
+                                                        102398537]
+                                },
+                                {
+                                name: 'People without access to electricity',
+                                type: 'line',
+                                stack: 'Total',
+                                areaStyle: {},
+                                color: '#8533ff',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        177320,
+                                                        0,
+                                                        0,
+                                                        0]
+                                },
+                            ]
+                            };
+                            
+                            option2 && myChart2.setOption(option2);
+    
+                    </script> 
+    
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 9</div>
+    
+                    <div id="chartsub3" class="chart2"></div>
+                        <script type="text/javascript">
+    
+                            var chartDom3 = document.getElementById('chartsub3');
+                            var myChart3 = echarts.init(chartDom3);
+                            var option3;
+                            option3 = {
+                            title: {
+                                text: 'Europe & Central Asia',
+                                left: "center",
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                                } 
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [
+                                {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['1990','1991','1992','1993','1994','1995','1996','1997','1998','1999','2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                type: 'value'
+                                }
+                            ],
+                            series: [
+                                {
+                                name: 'People with access to electricity',
+                                type: 'line',
+                                stack: 'Total',
+                                areaStyle: {},
+                                color: '#ff3333',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [841520451,
+                                        845399308,
+                                        848877909,
+                                        851974036,
+                                        854082582,
+                                        855470974,
+                                        856471306,
+                                        857713223,
+                                        858890461,
+                                        859102496,
+                                        860801721,
+                                        861912756,
+                                        863579059,
+                                        865965469,
+                                        868442320,
+                                        870997115,
+                                        873682703,
+                                        876897996,
+                                        880629799,
+                                        884207620,
+                                        887659750,
+                                        889836281,
+                                        893593142,
+                                        897839256,
+                                        902245543,
+                                        899955475,
+                                        910633700,
+                                        914576791,
+                                        918007688,
+                                        920748019]
+                                        },
+                                        {
+                                        name: 'People without access to electricity',
+                                        type: 'line',
+                                        stack: 'Total',
+                                        areaStyle: {},
+                                        color: '#8533ff',
+                                        emphasis: {
+                                            focus: 'series'
+                                        },
+                                        data: [0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        20328,
+                                        385927,
+                                        452183,
+                                        407623,
+                                        1216625,
+                                        476823,
+                                        435200,
+                                        357778,
+                                        250228,
+                                        365833,
+                                        459517,
+                                        474488,
+                                        402675,
+                                        302256,
+                                        261776,
+                                        267043,
+                                        325796,
+                                        193552,
+                                        218085,
+                                        158638,
+                                        6751938,
+                                        277200,
+                                        78290,
+                                        74821,
+                                        61452]
+                                        },
+                                    ]
+                                    };
+                            
+                            option3 && myChart3.setOption(option3);
+                            </script>
+    
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 9</div>
+                    
+                    <div id="chartsub4" class="chart2"></div>
+                        <script type="text/javascript">
+    
+                            var chartDom4 = document.getElementById('chartsub4');
+                            var myChart4 = echarts.init(chartDom4);
+                            var option4;
+                            option4 = {
+                            title: {
+                                text: 'East Asia & Pacific',
+                                left: "center",
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                                } 
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [
+                                {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                type: 'value'
+                                }
+                            ],
+                            series: [
+                                {
+                                name: 'People with access to electricity',
+                                type: 'line',
+                                stack: 'Total',
+                                areaStyle: {},
+                                color: '#ff3333',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [1911221074,
+                                        1938241667,
+                                        1939796447,
+                                        1959494720,
+                                        1992135707,
+                                        1999940339,
+                                        2035212088,
+                                        2050899498,
+                                        2074762841,
+                                        2085603015,
+                                        2108491894,
+                                        2135652605,
+                                        2155627823,
+                                        2174837144,
+                                        2193124683,
+                                        2217098411,
+                                        2234933502,
+                                        2264252932,
+                                        2280414390,
+                                        2296861241]
+                                        },
+                                        {
+                                        name: 'People without access to electricity',
+                                        type: 'line',
+                                        stack: 'Total',
+                                        areaStyle: {},
+                                        color: '#8533ff',
+                                        emphasis: {
+                                            focus: 'series'
+                                        },
+                                        data: [136419017,
+                                        127670366,
+                                        143389639,
+                                        140107761,
+                                        123322918,
+                                        131206508,
+                                        111532017,
+                                        110886013,
+                                        102356297,
+                                        106456385,
+                                        98392728,
+                                        86020118,
+                                        81189888,
+                                        77207347,
+                                        74361302,
+                                        65765314,
+                                        63567236,
+                                        49859916,
+                                        47779072,
+                                        43812508]
+                                            },
+                                        ]
+                                        };
+                                                        
+                            option4 && myChart4.setOption(option4);
+    
+                        </script> 
+                        
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">5 / 9</div>
+            
+                    <div id="chartsub5" class="chart2"></div>
+                        <script type="text/javascript">
+    
+                            var chartDom5 = document.getElementById('chartsub5');
+                            var myChart5 = echarts.init(chartDom5);
+                            var option5;
+                            option5 = {
+                                    title: {
+                                        text: 'Arab World',
+                                left: "center",
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                        type: 'cross',
+                                        label: {
+                                            backgroundColor: '#6a7985'
+                                        }
+                                        } 
+                                    },
+                                    grid: {
+                                        left: '3%',
+                                        right: '4%',
+                                        bottom: '3%',
+                                        containLabel: true
+                                    },
+                                    xAxis: [
+                                        {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: ['1997','1998','1999','2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                        type: 'value'
+                                        }
+                                    ],
+                                    series: [
+                                        {
+                                        name: 'People with access to electricity',
+                                        type: 'line',
+                                        stack: 'Total',
+                                        areaStyle: {},
+                                        color: '#ff3333',
+                                        emphasis: {
+                                            focus: 'series'
+                                        },
+                                        data: [204701837,
+                                        211868353,
+                                        218298210,
+                                        222691814,
+                                        229474137,
+                                        228400823,
+                                        237149505,
+                                        243509979,
+                                        251946453,
+                                        271686884,
+                                        271798482,
+                                        286454074,
+                                        291487995,
+                                        305436416,
+                                        313544639,
+                                        319804179,
+                                        334516921,
+                                        338254974,
+                                        348249383,
+                                        357595177,
+                                        369197276,
+                                        370755860,
+                                        382996447]
+                                        },
+                                        {
+                                        name: 'People without access to electricity',
+                                        type: 'line',
+                                        stack: 'Total',
+                                        areaStyle: {},
+                                        color: '#8533ff',
+                                        emphasis: {
+                                            focus: 'series'
+                                        },
+                                        data: [60120330,
+                                        58707424,
+                                        58095599,
+                                        59652327,
+                                        58958016,
+                                        66264379,
+                                        63964364,
+                                        64352867,
+                                        63019323,
+                                        50765880,
+                                        58492270,
+                                        51941862,
+                                        55141184,
+                                        49453681,
+                                        49612207,
+                                        51633463,
+                                        45179556,
+                                        49644861,
+                                        47778918,
+                                        46447715,
+                                        42745549,
+                                        49096129,
+                                        44873826]
+                                        },
+                                    ]
+                                    };
+                            
+                            option5 && myChart5.setOption(option5);
+    
+                        </script>
+                    
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">6 / 9</div>
+                
+                    <div id="chartsub9" class="chart2"></div>
+                        <script type="text/javascript">
+    
+                            var chartDom9 = document.getElementById('chartsub9');
+                            var myChart9 = echarts.init(chartDom9);
+                            var option9;
+                            option9 = {
+                            title: {
+                                text: 'Latin America & Caribbean',
+                                left: "center",
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                                } 
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [
+                                {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['1992','1993','1994','1995','1996','1997','1998','1999', '2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                type: 'value'
+                                }
+                            ],
+                            series: [
+                                {
+                                name: 'People with access to electricity',
+                                type: 'line',
+                                stack: 'Total',
+                                areaStyle: {},
+                                color: '#ff3333',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [405288762,
+                                        415276517,
+                                        426507238,
+                                        426272585,
+                                        437887423,
+                                        447166339,
+                                        457445307,
+                                        467624248,
+                                        477662827,
+                                        487874068,
+                                        496126570,
+                                        503345054,
+                                        512487851,
+                                        520769861,
+                                        531165854,
+                                        539086384,
+                                        549400912,
+                                        556804076,
+                                        567026357,
+                                        573791036,
+                                        582341753,
+                                        590425969,
+                                        597703720,
+                                        605457917,
+                                        612733069,
+                                        620157839,
+                                        626358198,
+                                        636244942]
+                                    },
+                                    {
+                                    name: 'People without access to electricity',
+                                    type: 'line',
+                                    stack: 'Total',
+                                    areaStyle: {},
+                                    color: '#8533ff',
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [52752731,
+                                        50805805,
+                                        47582353,
+                                        55787500,
+                                        52114987,
+                                        50723542,
+                                        48241790,
+                                        45742443,
+                                        43240648,
+                                        40409062,
+                                        39382817,
+                                        39254473,
+                                        37102829,
+                                        35734355,
+                                        32171803,
+                                        31005095,
+                                        27382831,
+                                        26625945,
+                                        22906173,
+                                        22747016,
+                                        20752903,
+                                        19169842,
+                                        18295336,
+                                        16843124,
+                                        15760525,
+                                        14408213,
+                                        14125388,
+                                        10185844]
+                                    },
+                                ]
+                                };
+                            
+                            option9 && myChart9.setOption(option9);
+    
+                        </script>
+                        
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">7 / 9</div>
+                
+                    <div id="chartsub6" class="chart2"></div>
+                        <script type="text/javascript">
+    
+                            var chartDom6 = document.getElementById('chartsub6');
+                            var myChart6 = echarts.init(chartDom6);
+                            var option6;
+                            option6 = {
+                                    title: {
+                                        text: 'Middle East & North Africa',
+                                left: "center",
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                        type: 'cross',
+                                        label: {
+                                            backgroundColor: '#6a7985'
+                                        }
+                                        } 
+                                    },
+                                    grid: {
+                                        left: '3%',
+                                        right: '4%',
+                                        bottom: '3%',
+                                        containLabel: true
+                                    },
+                                    xAxis: [
+                                        {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: ['1999', '2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                        type: 'value'
+                                        }
+                                    ],
+                                    series: [
+                                        {
+                                        name: 'People with access to electricity',
+                                        type: 'line',
+                                        stack: 'Total',
+                                        areaStyle: {},
+                                        color: '#ff3333',
+                                        emphasis: {
+                                            focus: 'series'
+                                        },
+                                        data: [287181171,
+                                        293504912,
+                                        299144414,
+                                        308249125,
+                                        314336750,
+                                        323409252,
+                                        338874441,
+                                        339479834,
+                                        350617569,
+                                        358577879,
+                                        369630102,
+                                        377499400,
+                                        383485395,
+                                        397975447,
+                                        401558765,
+                                        411078626,
+                                        419950554,
+                                        431092716,
+                                        432282676,
+                                        444070242]
+                                        },
+                                        {
+                                        name: 'People without access to electricity',
+                                        type: 'line',
+                                        stack: 'Total',
+                                        areaStyle: {},
+                                        color: '#8533ff',
+                                        emphasis: {
+                                            focus: 'series'
+                                        },
+                                        data: [28145610,
+                                        27792284,
+                                        28217860,
+                                        25359681,
+                                        25806727,
+                                        23620610,
+                                        15428024,
+                                        22449341,
+                                        19205658,
+                                        19306081,
+                                        16287826,
+                                        16443268,
+                                        18482968,
+                                        11993186,
+                                        16365585,
+                                        14743145,
+                                        13665488,
+                                        10206261,
+                                        16691556,
+                                        12639254]
+                                    },
+                                ]
+                                };
+                                                
+                            option6 && myChart6.setOption(option6);
+    
+                        </script>
+                        
+            </div>
+    
+    
+            <div class="mySlides fade">
+                <div class="numbertext">8 / 9</div>
+                
+                <div id="chartsub7" class="chart2"></div>
+                <script type="text/javascript">
+    
+                    var chartDom7 = document.getElementById('chartsub7');
+                    var myChart7 = echarts.init(chartDom7);
+                    var option7;
+                    option7 = {
+            title: {
+                text: 'Africa Western and Central',
+                                left: "center",
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+                } 
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1993','1994','1995','1996','1997','1998','1999','2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                }
+            ],
+            yAxis: [
+                {
+                type: 'value'
+                }
+            ],
+            series: [
+                {
+                name: 'People with access to electricity',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                color: '#ff3333',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [71399137,
+                                74401962,
+                                78688321,
+                                78559675,
+                                80142238,
+                                84531374,
+                                91050069,
+                                92611247,
+                                97874956,
+                                102600669,
+                                117738765,
+                                112274323,
+                                116121986,
+                                125156828,
+                                131498610,
+                                138304932,
+                                142783238,
+                                146290478,
+                                165375695,
+                                163389554,
+                                178874909,
+                                186629029,
+                                187750912,
+                                210190508,
+                                207004003,
+                                223069214,
+                                229450767]
+                },
+                {
+                name: 'People without access to electricity',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                color: '#8533ff',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [150355669,
+                                153290174,
+                                155119306,
+                                161554504,
+                                166471512,
+                                168770937,
+                                169120279,
+                                174603297,
+                                176558938,
+                                179241811,
+                                171730765,
+                                185078775,
+                                189398602,
+                                188828647,
+                                191243046,
+                                193467398,
+                                198267299,
+                                204266409,
+                                194909744,
+                                206853463,
+                                201562987,
+                                204253950,
+                                213835739,
+                                202360791,
+                                216765927,
+                                212160167,
+                                217460831]
+                },
+            ]
+            };
+                    
+                    option7 && myChart7.setOption(option7);
+    
+                </script>
+    
+                </div>
+    
+            <div class="mySlides fade">
+                <div class="numbertext">9 / 9</div>
+                
+                    <div id="chartsub8" class="chart2"></div>
+                        <script type="text/javascript">
+    
+                            var chartDom8 = document.getElementById('chartsub8');
+                            var myChart8 = echarts.init(chartDom8);
+                            var option8;
+                            option8 = {
+                            title: {
+                                text: 'Africa Eastern & Southern',
+                                left: "center",
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                                } 
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [
+                                {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['2000', '2001', '2002', '2003', '2004','2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                type: 'value'
+                                }
+                            ],
+                            series: [
+                                {
+                                name: 'People with access to electricity',
+                                type: 'line',
+                                stack: 'Total',
+                                areaStyle: {},
+                                color: '#ff3333',
+                                emphasis: {
+                                    focus: 'series'
+                                },
+                                data: [79965012,
+                                        94381597,
+                                        101550364,
+                                        107661408,
+                                        115602591,
+                                        107100837,
+                                        127101075,
+                                        137415379,
+                                        141525335,
+                                        138680811,
+                                        146381068,
+                                        151207190,
+                                        176421028,
+                                        180293992,
+                                        181073895,
+                                        197831559,
+                                        234112562,
+                                        249017487,
+                                        271179797,
+                                        288048557]
+                                    },
+                                    {
+                                    name: 'People without access to electricity',
+                                    type: 'line',
+                                    stack: 'Total',
+                                    areaStyle: {},
+                                    color: '#8533ff',
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [318148032,
+                                        314140532,
+                                        317673353,
+                                        322585227,
+                                        326027558,
+                                        346303239,
+                                        338480297,
+                                        340751532,
+                                        349647825,
+                                        365923861,
+                                        372087161,
+                                        381553234,
+                                        371061835,
+                                        382307587,
+                                        397001478,
+                                        396040289,
+                                        375866384,
+                                        377375393,
+                                        371910334,
+                                        371997715]
+                                    },
+                                ]
+                                };
+                            
+                            option8 && myChart8.setOption(option8);
+    
+                        </script>
+                        
+            </div>
+    
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+        </div>
+        <br>
+    
+        <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span> 
+        <span class="dot" onclick="currentSlide(2)"></span> 
+        <span class="dot" onclick="currentSlide(3)"></span> 
+        <span class="dot" onclick="currentSlide(4)"></span> 
+        <span class="dot" onclick="currentSlide(5)"></span> 
+        <span class="dot" onclick="currentSlide(6)"></span> 
+        <span class="dot" onclick="currentSlide(7)"></span> 
+        <span class="dot" onclick="currentSlide(8)"></span> 
+        <span class="dot" onclick="currentSlide(9)"></span> 
+        </div>
+    
+        <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+    
+        function plusSlides(n) {
+        showSlides(slideIndex += n);
+        }
+    
+        function currentSlide(n) {
+        showSlides(slideIndex = n);
+        }
+    
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        }
+        </script>
+
+
+        <div class="text2">
+            <h2>Access to electricity by Country</h2>
+            <p>Recording the access by country over the last thirty years</p>
+        </div>
+
+    </script>
+
+        <iframe
+        src="slidermap.html"
+        width="100%"
+        height="600px"
+        title="My file"
+        ></iframe>
+    
+           
+        </script>
+            
+    <div class="text2">
+        <h2>Energy Use Per Capita</h2>
+        <p>The graph indicates energy use capita by country in KWH per person. 
+            Evidently, the levels of energy use by the population is lesser in the global south in comparison to the northern neighbours. 
+            In 1960s North America's per capita energy use was 72,922 kWh which increased to 89,236 kWh in 1990s and has now decreased to 79,897 kWh (2019). 
+            In contrast, Nigeria's per capita use in 1990 was 2,138 kWh which increased to 2,726 kWh in 2019.
+            With an arguably diverse population range, the use of per capita energy indicates an evident divide between the amount produced as well as consumed.</p>
+    </div>
+ 
+   
+    <div id="chartsub10" class="chart3"></div>
+        
+    <script type="text/javascript">
+        var app = {};
+
+        var chartDom10 = document.getElementById('chartsub10');
+        var myChart10 = echarts.init(chartDom10);
+        var option10;
+
+        const posList = [
+        'left',
+        'right',
+        'top',
+        'bottom',
+        'inside',
+        'insideTop',
+        'insideLeft',
+        'insideRight',
+        'insideBottom',
+        'insideTopLeft',
+        'insideTopRight',
+        'insideBottomLeft',
+        'insideBottomRight'
+        ];
+        app.configParameters = {
+        rotate: {
+            min: -90,
+            max: 90
+        },
+        align: {
+            options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+            }
+        },
+        verticalAlign: {
+            options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+            }
+        },
+        position: {
+            options: posList.reduce(function (map, pos) {
+            map[pos] = pos;
+            return map;
+            }, {})
+        },
+        distance: {
+            min: 0,
+            max: 100
+        }
+        };
+
+        app.config = {
+        rotate: 90,
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
+        distance: 15,
+        onChange: function () {
+            const labelOption = {
+            rotate: app.config.rotate,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            position: app.config.position,
+            distance: app.config.distance
+            };
+            myChart.setOption({
+            series: [
+                {
+                label: labelOption
+                },
+                {
+                label: labelOption
+                },
+                {
+                label: labelOption
+                },
+                {
+                label: labelOption
+                }
+            ]
+            });
+        }
+        };
+
+        const labelOption = {
+        show: false,
+        position: app.config.position,
+        distance: app.config.distance,
+        align: app.config.align,
+        verticalAlign: app.config.verticalAlign,
+        rotate: app.config.rotate,
+        formatter: '{c}  {name|{a}}',
+        fontSize: 16,
+        rich: {
+            name: {}
+        }
+        };
+
+        option10 = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+            type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['USA', 'UK', 'India', 'Nigeria']
+        },
+        xAxis: [
+            {
+            type: 'category',
+            axisTick: { show: false },
+            data: ['1980', '1990', '2000', '2010', '2019']
+            }
+        ],
+        yAxis: [
+            {
+            type: 'value'
+            }
+        ],
+        series: [
+            {
+            name: 'USA',
+            type: 'bar',
+            barGap: 0,
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [90281.745, 89235.912, 93810.546, 83575.469, 79897.151]
+            },
+            {
+            name: 'UK',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [42310.079, 43814.582, 45129.487, 39124.539, 32249.735]
+            },
+            {
+            name: 'India',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [1729.04, 2619.875, 3507.548, 5075.993, 6923.931]
+            },
+            {
+            name: 'Nigeria',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [1682.024, 2137.503, 1830.895, 1542.004, 2725.678]
+            }
+        ]
+        };
+
+        option10 && myChart10.setOption(option10);
+    </script>
+
+    <div class="text2">
+        <p>The UN explains: <i> "Energy is central to nearly every major challenge and opportunity the world faces today. Be it for jobs, 
+            security, climate change, food production or increasing incomes, access to energy for all is essential. Transitioning the 
+            global economy towards clean and sustainable sources of energy is one of our greatest challenges in the coming decades. 
+            Sustainable energy is an opportunity – it transforms lives, economies and the planet." </i> </p>
+        <p>But perhaps accessibility to electricity posses a greater challenge today.</p>
+    </div>
+    </body>
+
+</html>
